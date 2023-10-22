@@ -115,8 +115,8 @@ dbWriteDataFrame <- function(conn, name, df, overwrite = FALSE,
   ## MODULAR HANDING OF DIFFERENT DATA TYPES -----------------------------
   
   ## handle attribute (time zones)
-  attr2 <- purrr::map(d[1,], \(x) attr(x, "tzone")[1])
-  badtz <- purrr::map_vec(attr2, \(x) any(is.null(x), !x %in% OlsonNames()))
+  attr2 <- purrr::map(d[1,], (x) attr(x, "tzone")[1])
+  badtz <- purrr::map_vec(attr2, (x) any(is.null(x), !x %in% OlsonNames()))
   attr2[badtz] <- "NULL"
   attr2 <- unlist(attr2)
   
@@ -128,7 +128,7 @@ dbWriteDataFrame <- function(conn, name, df, overwrite = FALSE,
   }
   
   ## handle attribute (FACTOR levels)
-  fact <- purrr::map_vec(d, \(x) 
+  fact <- purrr::map_vec(d, (x) 
                          paste0("/*/", paste(levels(x), collapse = "/*/"), "/*/"))
   
   fact <- gsub(",", "\\,", fact, fixed = TRUE)
